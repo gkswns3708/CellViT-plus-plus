@@ -34,7 +34,7 @@ class CoNSePDataset(Dataset):
             [A.Normalize(mean=(0.5, 0.5, 0.5), std=(0.5, 0.5, 0.5)), ToTensorV2()]
         ),
         normalize_stains: bool = False,
-        merge_classes: bool = True,
+        merge_classes: bool = False, # 기존에는 True, 현재는 False
     ) -> None:
         """CoNSeP Dataset for Cell Segmentation
 

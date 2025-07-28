@@ -1,0 +1,412 @@
+.
+├── LICENSE
+├── README.md
+├── annotation_tool
+│   ├── docker-compose.yaml
+│   └── example_dataset
+│       ├── config.yaml
+│       └── dataset
+│           ├── wsi_01_R_0_C_00_cell_9660_bb_120_118_136_139_bb2_609_146_625_167_image.png
+│           ├── wsi_01_R_0_C_00_cell_9663_bb_119_121_137_136_bb2_518_150_536_165_image.png
+│           ├── wsi_01_R_0_C_00_cell_9664_bb_113_116_143_141_bb2_494_151_524_176_image.png
+│           ├── wsi_01_R_0_C_00_cell_9671_bb_118_113_139_144_bb2_536_157_557_188_image.png
+│           ├── wsi_01_R_0_C_00_cell_9676_bb_122_119_135_137_bb2_556_171_569_189_image.png
+│           ├── wsi_01_R_0_C_00_cell_9679_bb_120_116_137_140_bb2_466_186_483_210_image.png
+│           ├── wsi_01_R_0_C_00_cell_9680_bb_119_116_137_141_bb2_596_187_614_212_image.png
+│           ├── wsi_01_R_0_C_00_context.jpg
+│           ├── wsi_01_R_0_C_00_context2.jpg
+│           ├── wsi_01_R_0_C_10_cell_9739_bb_114_119_143_138_bb2_576_125_605_144_image.png
+│           ├── wsi_01_R_0_C_10_cell_9742_bb_120_123_137_134_bb2_501_146_518_157_image.png
+│           ├── wsi_01_R_0_C_10_context.jpg
+│           └── wsi_01_R_0_C_10_context2.jpg
+├── cellvit
+│   ├── __init__.py
+│   ├── __pycache__
+│   │   └── __init__.cpython-310.pyc
+│   ├── config
+│   │   ├── __init__.py
+│   │   ├── __pycache__
+│   │   │   ├── __init__.cpython-310.pyc
+│   │   │   ├── config.cpython-310.pyc
+│   │   │   └── templates.cpython-310.pyc
+│   │   ├── config.py
+│   │   └── templates.py
+│   ├── data
+│   │   └── dataclass
+│   │       ├── __init__.py
+│   │       ├── __pycache__
+│   │       ├── cell_graph.py
+│   │       └── wsi.py
+│   ├── detect_cells.py
+│   ├── detect_cells_disk.py
+│   ├── inference
+│   │   ├── __init__.py
+│   │   ├── __pycache__
+│   │   │   ├── __init__.cpython-310.pyc
+│   │   │   ├── cli.cpython-310.pyc
+│   │   │   ├── inference_disk.cpython-310.pyc
+│   │   │   ├── inference_memory.cpython-310.pyc
+│   │   │   ├── overlap_cell_cleaner.cpython-310.pyc
+│   │   │   ├── postprocessing_cupy.cpython-310.pyc
+│   │   │   └── wsi_meta.cpython-310.pyc
+│   │   ├── cli.py
+│   │   ├── inference_disk.py
+│   │   ├── inference_memory.py
+│   │   ├── overlap_cell_cleaner.py
+│   │   ├── postprocessing_cupy.py
+│   │   ├── ray_test.py
+│   │   └── wsi_meta.py
+│   ├── models
+│   │   ├── __init__.py
+│   │   ├── __pycache__
+│   │   │   └── __init__.cpython-310.pyc
+│   │   ├── base
+│   │   │   ├── __init__.py
+│   │   │   ├── __pycache__
+│   │   │   └── vision_transformer.py
+│   │   ├── cell_segmentation
+│   │   │   ├── __init__.py
+│   │   │   ├── __pycache__
+│   │   │   ├── backbones.py
+│   │   │   ├── cellvit.py
+│   │   │   ├── cellvit_256.py
+│   │   │   ├── cellvit_sam.py
+│   │   │   ├── cellvit_uni.py
+│   │   │   ├── cellvit_virchow.py
+│   │   │   ├── cellvit_virchow2.py
+│   │   │   └── postprocessing.py
+│   │   ├── classifier
+│   │   │   ├── __init__.py
+│   │   │   ├── __pycache__
+│   │   │   └── linear_classifier.py
+│   │   └── utils
+│   │       ├── __init__.py
+│   │       ├── __pycache__
+│   │       ├── blocks.py
+│   │       ├── download_models.py
+│   │       ├── sam_utils.py
+│   │       ├── uni_utils.py
+│   │       └── virchow_utils.py
+│   ├── pretrain_cellvit.py
+│   ├── train_cell_classifier_head.py
+│   ├── train_cell_classifier_head_histomics.py
+│   ├── train_cellvit.py
+│   ├── training
+│   │   ├── __init__.py
+│   │   ├── __pycache__
+│   │   │   └── __init__.cpython-310.pyc
+│   │   ├── base_ml
+│   │   │   ├── __init__.py
+│   │   │   ├── __pycache__
+│   │   │   ├── base_cli.py
+│   │   │   ├── base_early_stopping.py
+│   │   │   ├── base_experiment.py
+│   │   │   ├── base_loss.py
+│   │   │   ├── base_optim.py
+│   │   │   ├── base_trainer.py
+│   │   │   ├── base_utils.py
+│   │   │   └── base_validator.py
+│   │   ├── datasets
+│   │   │   ├── __init__.py
+│   │   │   ├── __pycache__
+│   │   │   ├── base_cell_dataset.py
+│   │   │   ├── consep.py
+│   │   │   ├── dataset_coordinator.py
+│   │   │   ├── detection_dataset.py
+│   │   │   ├── lizard.py
+│   │   │   ├── midog.py
+│   │   │   ├── monuseg.py
+│   │   │   ├── nucls.py
+│   │   │   ├── ocelot.py
+│   │   │   ├── pannuke.py
+│   │   │   ├── panoptils.py
+│   │   │   ├── prepare_pannuke.py
+│   │   │   ├── segmentation_dataset.py
+│   │   │   └── segpath.py
+│   │   ├── evaluate
+│   │   │   ├── __init__.py
+│   │   │   ├── __pycache__
+│   │   │   ├── cellpostprocessor.py
+│   │   │   ├── inference_cellvit_experiment_classifier.py
+│   │   │   ├── inference_cellvit_experiment_consep.py
+│   │   │   ├── inference_cellvit_experiment_detection.py
+│   │   │   ├── inference_cellvit_experiment_lizard.py
+│   │   │   ├── inference_cellvit_experiment_lizard_pycaret.py
+│   │   │   ├── inference_cellvit_experiment_midog.py
+│   │   │   ├── inference_cellvit_experiment_monuseg.py
+│   │   │   ├── inference_cellvit_experiment_nucls.py
+│   │   │   ├── inference_cellvit_experiment_ocelot.py
+│   │   │   ├── inference_cellvit_experiment_pannuke.py
+│   │   │   ├── inference_cellvit_experiment_panoptils.py
+│   │   │   ├── inference_cellvit_experiment_segpath.py
+│   │   │   ├── inference_cellvit_experiment_segpath_nucls.py
+│   │   │   └── ocelot_eval_metrics.py
+│   │   ├── experiments
+│   │   │   ├── __init__.py
+│   │   │   ├── __pycache__
+│   │   │   ├── experiment_cell_classifier.py
+│   │   │   ├── experiment_cell_classifier_histomics.py
+│   │   │   ├── experiment_cellvit_pannuke.py
+│   │   │   └── experiment_cellvit_pretraining.py
+│   │   ├── trainer
+│   │   │   ├── __init__.py
+│   │   │   ├── __pycache__
+│   │   │   ├── trainer_cell_classifier.py
+│   │   │   ├── trainer_cell_classifier_lizard.py
+│   │   │   ├── trainer_cell_classifier_lizard_preextracted.py
+│   │   │   ├── trainer_cell_classifier_midog.py
+│   │   │   ├── trainer_cell_classifier_nucls_label.py
+│   │   │   ├── trainer_cell_classifier_segpath.py
+│   │   │   ├── trainer_cellvit.py
+│   │   │   └── trainer_pretrain_cellvit.py
+│   │   └── utils
+│   │       ├── __pycache__
+│   │       ├── metrics.py
+│   │       ├── post_proc_cellvit.py
+│   │       └── tools.py
+│   └── utils
+│       ├── __init__.py
+│       ├── __pycache__
+│       │   ├── __init__.cpython-310.pyc
+│       │   ├── download_example_files.cpython-310.pyc
+│       │   ├── logger.cpython-310.pyc
+│       │   └── tools.cpython-310.pyc
+│       ├── download_example_files.py
+│       ├── logger.py
+│       └── tools.py
+├── check_environment.py
+├── checkpoints
+│   ├── CellViT-SAM-H-x40-AMP.pth
+│   └── classifier
+│       ├── labels.yaml
+│       └── sam-h
+│           ├── consep.pth
+│           ├── lizard.pth
+│           ├── midog.pth
+│           ├── nucls_main.pth
+│           ├── nucls_super.pth
+│           ├── ocelot.pth
+│           └── panoptils.pth
+├── config
+│   ├── CoNSeP_full.yaml
+│   └── CoNSeP_merged.yaml
+├── cufile.log
+├── dataset
+│   ├── CoNSeP.zip
+│   ├── original
+│   │   └── CoNSeP
+│   │       ├── README.txt
+│   │       ├── Test
+│   │       └── Train
+│   └── transformed
+│       └── CoNSeP
+│           ├── Test
+│           └── Train
+├── docker-compose.yaml
+├── docs
+│   └── figures
+│       ├── banner.png
+│       ├── framework.jpeg
+│       ├── web-viewer.gif
+│       └── web-viewer.mov
+├── environment.yaml
+├── environment_full.yaml
+├── environment_verbose.yaml
+├── histomics_features
+│   ├── classical_models.py
+│   ├── classical_models_loading_debug.py
+│   ├── clean_cell_dict.py
+│   ├── extract_features.py
+│   ├── histomicstk_scripts
+│   │   ├── __init__.py
+│   │   ├── compute_fsd_features.py
+│   │   ├── compute_gradient_features.py
+│   │   ├── compute_haralick_features.py
+│   │   └── compute_intensity_features.py
+│   └── norm_vector_calulation.py
+├── logs
+│   ├── Classifiers
+│   │   ├── CoNSeP
+│   │   │   ├── SAM-H
+│   │   │   ├── UNI
+│   │   │   ├── ViT256
+│   │   │   ├── Virchow
+│   │   │   └── Virchow2
+│   │   ├── Lizard
+│   │   │   ├── Histomics
+│   │   │   ├── Histomics-classic-ml
+│   │   │   ├── SAM-H
+│   │   │   ├── UNI
+│   │   │   └── ViT256
+│   │   ├── MIDOG
+│   │   │   └── single-domain
+│   │   ├── NuCLS
+│   │   │   └── Clean-Dataset
+│   │   ├── Ocelot
+│   │   │   ├── SAM-H
+│   │   │   ├── UNI
+│   │   │   ├── ViT256
+│   │   │   ├── Virchow
+│   │   │   └── Virchow2
+│   │   ├── PanopTILs
+│   │   │   ├── SAM-H
+│   │   │   ├── UNI
+│   │   │   └── ViT256
+│   │   └── SegPath
+│   │       ├── Lymphocytes
+│   │       └── Plasma
+│   ├── Datasets
+│   │   ├── CoNSeP
+│   │   │   ├── CoNSeP.ipynb
+│   │   │   ├── data-amount
+│   │   │   ├── label_map.yaml
+│   │   │   └── splits
+│   │   ├── Lizard
+│   │   │   ├── Lizard.ipynb
+│   │   │   ├── fold_1
+│   │   │   ├── fold_2
+│   │   │   ├── fold_3
+│   │   │   └── label_map.yaml
+│   │   ├── MIDOG++
+│   │   │   ├── MIDOG++.ipynb
+│   │   │   ├── config.yaml
+│   │   │   ├── convert.sh
+│   │   │   ├── datasets_xvalidation.csv
+│   │   │   ├── filelist.csv
+│   │   │   ├── gt_dataset.json
+│   │   │   ├── gt_test.json
+│   │   │   ├── images
+│   │   │   ├── images_raw
+│   │   │   ├── label_map.yaml
+│   │   │   ├── midog.json
+│   │   │   ├── midog_indent.json
+│   │   │   └── split
+│   │   ├── NuCLS
+│   │   │   ├── Main
+│   │   │   ├── NuCLS.ipynb
+│   │   │   └── Super
+│   │   ├── Ocelot
+│   │   │   ├── label_map.yaml
+│   │   │   ├── metadata.json
+│   │   │   └── splits
+│   │   ├── Panoptils
+│   │   │   ├── PanopTILS.ipynb
+│   │   │   └── label_map.yaml
+│   │   └── SegPath
+│   │       ├── Lymphocytes
+│   │       ├── Plasma
+│   │       └── SegPath.ipynb
+│   └── PanNuke
+│       ├── CellViTCPP
+│       │   ├── SAM-H
+│       │   └── ViT256
+│       ├── CellViTHV
+│       │   ├── SAM-B
+│       │   ├── SAM-H
+│       │   ├── SAM-L
+│       │   └── ViT256
+│       └── CellViTStarDist
+│           ├── RN50
+│           ├── SAM-H
+│           └── ViT256
+├── logs_local
+│   ├── 2025-07-28T031331_cellvit++
+│   │   ├── config.yaml
+│   │   └── logs.log
+│   ├── 2025-07-28T034228_cellvit++
+│   │   ├── config.yaml
+│   │   └── logs.log
+│   └── 2025-07-28T034314_cellvit++
+│       ├── config.yaml
+│       └── logs.log
+├── requirements.txt
+├── scripts
+│   ├── average_folds.py
+│   ├── calc_threshold_pr.py
+│   ├── calc_threshold_roc.py
+│   └── find_best_hyperparameter.py
+├── temp.txt
+├── test-results
+│   └── x20
+│       └── binary
+│           ├── CMU-1-Small-Region_cell_detection.geojson
+│           ├── CMU-1-Small-Region_cell_detection.json
+│           ├── CMU-1-Small-Region_cells.geojson
+│           └── CMU-1-Small-Region_cells.json
+├── test_database
+│   ├── MIDOG
+│   │   ├── 001.tiff
+│   │   ├── 001_pyramid.tiff
+│   │   ├── citation.txt
+│   │   └── example_filelist.csv
+│   ├── training_database
+│   │   ├── Example-Detection
+│   │   │   ├── create_overlay.ipynb
+│   │   │   ├── label_map.yaml
+│   │   │   ├── readme.txt
+│   │   │   ├── splits
+│   │   │   ├── test
+│   │   │   ├── train
+│   │   │   └── train_configs
+│   │   ├── Example-Detection-Non-Squared
+│   │   │   ├── label_map.yaml
+│   │   │   ├── readme.txt
+│   │   │   ├── splits
+│   │   │   ├── test
+│   │   │   ├── train
+│   │   │   └── train_configs
+│   │   ├── Example-Segmentation
+│   │   │   ├── create_overlay.ipynb
+│   │   │   ├── label_map.yaml
+│   │   │   ├── readme.txt
+│   │   │   ├── splits
+│   │   │   ├── test
+│   │   │   ├── train
+│   │   │   └── train_configs
+│   │   └── Example-Segmentation-Non-Squared
+│   │       ├── create_overlay.ipynb
+│   │       ├── label_map.yaml
+│   │       ├── readme.txt
+│   │       ├── splits
+│   │       ├── test
+│   │       ├── train
+│   │       └── train_configs
+│   ├── x20_svs
+│   │   ├── CMU-1-Small-Region.svs
+│   │   ├── LICENSE
+│   │   └── readme.txt
+│   └── x40_svs
+│       ├── JP2K-33003-2.svs
+│       ├── JP2K-33003-2_cell_detection.geojson
+│       ├── JP2K-33003-2_cells.geojson
+│       └── LICENSE
+└── viewer
+    ├── SlideProvider
+    │   ├── Dockerfile
+    │   ├── environment.yml
+    │   ├── requirements.txt
+    │   └── slide_provider.py
+    ├── Viewer
+    │   ├── Dockerfile
+    │   ├── assets
+    │   │   ├── android-chrome-192x192.png
+    │   │   ├── android-chrome-512x512.png
+    │   │   ├── apple-touch-icon.png
+    │   │   ├── favicon-16x16.png
+    │   │   ├── favicon-32x32.png
+    │   │   ├── favicon.ico
+    │   │   ├── logo.png
+    │   │   ├── logo_background.png
+    │   │   └── site.webmanifest
+    │   ├── index.html
+    │   ├── main.js
+    │   ├── package-lock.json
+    │   ├── package.json
+    │   ├── readme.md
+    │   ├── style.css
+    │   └── vite.config.js
+    ├── docker-compose-deploy.yaml
+    ├── docker-compose-develop.yaml
+    └── docker-compose.yaml
+
+157 directories, 252 files

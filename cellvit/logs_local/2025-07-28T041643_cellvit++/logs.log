@@ -1,0 +1,7 @@
+[37m2025-07-28 04:16:47,035 [INFO] - Instantiated Logger. WandB init and config update finished.
+[37m2025-07-28 04:16:47,035 [INFO] - Run ist stored here: /workspace/CellViT-plus-plus/cellvit/logs_local/2025-07-28T041643_cellvit++
+[37m2025-07-28 04:16:47,108 [INFO] - Cuda devices: [<torch.cuda.device object at 0x7139dc822230>, <torch.cuda.device object at 0x7139dc822260>, <torch.cuda.device object at 0x7139dc822140>, <torch.cuda.device object at 0x7139dc822350>, <torch.cuda.device object at 0x7139dc8223e0>, <torch.cuda.device object at 0x7139dc822440>]
+[37m2025-07-28 04:16:47,108 [INFO] - Using GPU: cuda:0
+[37m2025-07-28 04:16:47,108 [INFO] - Using device: cuda:0
+[37m2025-07-28 04:16:47,109 [INFO] - Loss function:
+[37m2025-07-28 04:16:47,109 [INFO] - CrossEntropyLoss()

@@ -1,0 +1,54 @@
+logging:
+  mode: offline
+  project: cellvit++
+  notes: cellvit++
+  log_comment: cellvit++
+  wandb_dir: ./logs_local
+  log_dir: ./logs_local
+  level: Debug
+
+random_seed: 19
+
+gpu: 0
+
+data:
+  dataset: SegmentationDataset 
+  dataset_path: ./cellvit/dataset/transformed/CoNSeP
+  normalize_stains_train: false
+  normalize_stains_val: false
+  num_classes: 8
+  train_filelist: ./cellvit/dataset/transformed/CoNSeP/csv/train.csv
+  val_filelist: ./cellvit/dataset/transformed/CoNSeP/csv/val.csv
+  label_map:
+    0: background
+    1: other
+    2: inflammatory
+    3: healthy epithelial
+    4: dysplastic/malignant epithelial
+    5: fibroblast
+    6: muscle
+    7: endothelial
+    
+
+cellvit_path: ./checkpoints/CellViT-SAM-H-x40-AMP.pth
+
+model:
+  hidden_dim: 128
+
+training:
+  cache_cell_dataset: true
+  batch_size: 256
+  epochs: 50
+  drop_rate: 0.1
+  optimizer: AdamW
+  optimizer_hyperparameter:
+    betas:
+    - 0.85
+    - 0.9
+    lr: 0.0005
+    weight_decay: 0.0005
+  early_stopping_patience: 20
+  mixed_precision: true
+  eval_every: 1
+  scheduler:
+    scheduler_type: constant

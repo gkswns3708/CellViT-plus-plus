@@ -443,6 +443,7 @@ class CellViTClassifierInferenceExperiment(ABC):
             patch_token,
             image_name,
         ) in zip(cell_pred_dict, cell_gt_batch, types_batch, tokens, image_names):
+            print(image_name,"- image_name")
             image_pred_dict[image_name] = {}
             pred_centroids = [v["centroid"] for v in pred_dict.values()]
             pred_centroids = np.array(pred_centroids)

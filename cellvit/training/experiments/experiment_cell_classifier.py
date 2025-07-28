@@ -329,11 +329,14 @@ class ExperimentCellVitClassifier(BaseExperiment):
             self.logger.info("Checkpoint was provided. Restore ...")
             trainer.resume_checkpoint(self.checkpoint)
 
+        
+        print(next(iter(train_dataloader))," - train_dataloader")
+        
         # Call fit method
         self.logger.info("Calling Trainer Fit")
         trainer.fit(
             epochs=self.run_conf["training"]["epochs"],
-            train_dataloader=train_dataloader,
+            train_dataloader=train_dataloader, # CellViTHeadTrainer
             val_dataloader=val_dataloader,
             metric_init=self.get_wandb_init_dict(),
             eval_every=self.run_conf["training"].get("eval_every", 1),
@@ -486,6 +489,7 @@ class ExperimentCellVitClassifier(BaseExperiment):
         elif dataset.lower() == "consep":
             if train_filelist is None or val_filelist is None:
                 raise NotImplementedError("Validation filelist must be provided!")
+            print('CoNSeP Dataset이 Loading됨.')
             train_dataset = CoNSePDataset(
                 dataset_path=self.run_conf["data"]["dataset_path"],
                 split="Train",
@@ -620,6 +624,7 @@ class ExperimentCellVitClassifier(BaseExperiment):
             val_dataset.cache_dataset()
             self.logger.info("Caching datasets")
         elif dataset.lower() in ["segmentationdataset"]:
+            print("SegmentationDataset이 로딩됨.")
             train_dataset = SegmentationDataset(
                 dataset_path=self.run_conf["data"]["dataset_path"],
                 split="train",
@@ -629,13 +634,16 @@ class ExperimentCellVitClassifier(BaseExperiment):
             )
             val_dataset = SegmentationDataset(
                 dataset_path=self.run_conf["data"]["dataset_path"],
-                split="train",
+                split="val", # 내 생각엔 val로 수정되어야 함.
+                # split="train", # 내 생각엔 val로 수정되어야 함.
                 filelist_path=val_filelist,
                 transforms=val_transforms,
                 normalize_stains=normalize_stains_val,
             )
             train_dataset.cache_dataset()
             val_dataset.cache_dataset()
+            # print(train_dataset[0], "_train_dataset[0]") # img, detections, types, img_name
+            # print(val_dataset[0], "_val_dataset[0]") # img, detections, types, img_name
             self.logger.info("Caching datasets")
         else:
             raise NotImplementedError(f"Unknown dataset: {dataset}")

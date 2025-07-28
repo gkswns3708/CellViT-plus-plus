@@ -31,6 +31,7 @@ if __name__ == "__main__":
     configuration = configuration_parser.parse_arguments()
     experiment_class = ExperimentCellVitClassifier
 
+    print("run")
     # Setup experiment
     if "checkpoint" in configuration:
         # continue checkpoint

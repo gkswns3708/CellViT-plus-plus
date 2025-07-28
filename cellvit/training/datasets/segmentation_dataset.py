@@ -50,6 +50,12 @@ class SegmentationDataset(Dataset):
             normalize_stains (bool, optional): If stains should be normalized. Defaults to False.
         """
         super().__init__()
+        print("CoNSeP Dataset Configuration")
+        print(dataset_path," - dataset_path")
+        print(split," - split")
+        print(filelist_path," - filelist_path")
+        print(transforms," - transforms")
+        
         self.transforms = transforms
         self.normalize_stains = normalize_stains
         if normalize_stains:
@@ -115,7 +121,6 @@ class SegmentationDataset(Dataset):
                         int(type_ids[np.argmax(counts)]),
                     )
                 )
-
             self.cache_annotations[img_path.stem] = cell_annot
 
     def __len__(self) -> int:
