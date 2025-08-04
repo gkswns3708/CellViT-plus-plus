@@ -35,6 +35,7 @@ from cellvit.training.base_ml.base_experiment import BaseExperiment
 from cellvit.training.base_ml.base_loss import retrieve_loss_fn
 from cellvit.training.base_ml.base_trainer import BaseTrainer
 from cellvit.training.datasets.consep import CoNSePDataset
+from cellvit.training.datasets.consep_segmentation import CoNSePSegmentationDataset
 from cellvit.training.datasets.ocelot import OcelotDataset
 from cellvit.training.datasets.segpath import SegPathDataset
 from cellvit.training.datasets.midog import MIDOGDataset
@@ -455,6 +456,7 @@ class ExperimentCellVitClassifier(BaseExperiment):
         train_filelist: Union[Path, str] = None,
         val_filelist: Union[Path, str] = None,
     ) -> Tuple[Dataset, Dataset]:
+        print("get_datasets(),", dataset, " - dataset")
         """Retrieve training dataset and validation dataset
 
         Args:
@@ -498,6 +500,27 @@ class ExperimentCellVitClassifier(BaseExperiment):
                 normalize_stains=normalize_stains_train,
             )
             val_dataset = CoNSePDataset(
+                dataset_path=self.run_conf["data"]["dataset_path"],
+                split="Train",
+                transforms=val_transforms,
+                filelist_path=val_filelist,
+                normalize_stains=normalize_stains_val,
+            )
+            self.logger.info("Caching datasets")
+            train_dataset.cache_dataset()
+            val_dataset.cache_dataset()
+        elif dataset.lower() == "consepsegmentation":
+            if train_filelist is None or val_filelist is None:
+                raise NotImplementedError("Validation filelist must be provided!")
+            print('CoNSeP Dataset이 Loading됨.')
+            train_dataset = CoNSePSegmentationDataset(
+                dataset_path=self.run_conf["data"]["dataset_path"],
+                split="Train",
+                transforms=train_transforms,
+                filelist_path=train_filelist,
+                normalize_stains=normalize_stains_train,
+            )
+            val_dataset = CoNSePSegmentationDataset(
                 dataset_path=self.run_conf["data"]["dataset_path"],
                 split="Train",
                 transforms=val_transforms,

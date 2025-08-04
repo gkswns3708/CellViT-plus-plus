@@ -22,9 +22,10 @@ from torchvision.transforms.functional import to_tensor
 import tqdm
 import csv
 from natsort import natsorted as sorted
+from scipy.ndimage import center_of_mass
 
 
-class CoNSePDataset(Dataset):
+class CoNSePSegmentationDataset(Dataset):
     def __init__(
         self,
         dataset_path: Union[Path, str],
@@ -59,7 +60,7 @@ class CoNSePDataset(Dataset):
         self.dataset_path = Path(dataset_path)
         self.split = split
         self.image_path = self.dataset_path / self.split / "images"
-        self.annotation_path = self.dataset_path / self.split / "detections"
+        self.annotation_path = self.dataset_path / self.split / "labels"
         print(self.image_path, " - image_path")
         print(self.annotation_path, " - annotation_path")
 
@@ -75,7 +76,7 @@ class CoNSePDataset(Dataset):
         self.annotations = []
         for img_path in self.images:
             img_name = img_path.stem
-            self.annotations.append(self.annotation_path / f"{img_name}.json")
+            self.annotations.append(self.annotation_path / f"{img_name}.npy")
 
         self.cache_images = {}
         self.cache_annotations = {}
@@ -107,9 +108,32 @@ class CoNSePDataset(Dataset):
             img = Image.open(img_path)
             img = img.convert("RGB")
             self.cache_images[img_path.stem] = img
-            print(img_path.stem, "img-path.stem")
-            with open(annot_path, "r") as file:
-                cell_annot = json.load(file)
+
+            annotation = np.load(annot_path, allow_pickle=True)
+            inst_map = annotation.item().get("inst_map")
+            inst_map = inst_map.astype(np.uint32)
+            type_map = annotation.item().get("type_map")
+            type_map = type_map.astype(np.uint32)
+
+            cell_annot = []
+            for inst_id in np.unique(inst_map):
+                if inst_id == 0:
+                    continue
+                inst_mask = inst_map == inst_id
+                inst_mask = inst_mask.astype(np.uint8)
+                y, x = center_of_mass(inst_mask) # 질량 중심점 
+
+                cell_type = type_map[inst_map == inst_id]  # mask
+                cell_type = cell_type[cell_type != 0] # background 제외
+                # 여기서 [1, 2, 4, 5], [10, 20, 30, 40]개 형태로 나옴.
+                type_ids, counts = np.unique(cell_type, return_counts=True) 
+                cell_annot.append(
+                    (
+                        int(np.round(x)),
+                        int(np.round(y)),
+                        int(type_ids[np.argmax(counts)]), # 가장 많이 나온 cell type
+                    )
+                )
             self.cache_annotations[img_path.stem] = cell_annot
 
     def __len__(self) -> int:

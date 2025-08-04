@@ -287,6 +287,7 @@ class CellViTHeadTrainer(BaseTrainer):
                 coords[i] = cell["coords"]
                 types[i] = cell["type"]
                 tokens[i] = cell["token"].numpy()
+                print(f"{i}번째 cell writing 중 ...(CellViTHeadTrainer)")
 
     def _load_from_cache(self, dataset_part: str) -> List:
         """Load from cache
